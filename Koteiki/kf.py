@@ -22,7 +22,7 @@ class Camera:
 
 
 FPS = 50
-WIDTH, HEIGHT = 1000, 1000
+WIDTH, HEIGHT = 1000, 700
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 screen.fill((0, 0, 255))
@@ -49,11 +49,9 @@ def load_image(name, colorkey=None):
         image.set_colorkey(colorkey)
     return image
 
+
 def start_screen():
-    intro_text = ["ЗАСТАВКА", "",
-                  "Правила игры",
-                  "Если в правилах несколько строк,",
-                  "приходится выводить их построчно"]
+    intro_text = ["Хождения Котейки"]
 
     fon = pygame.transform.scale(load_image('FonD.jpg'), (WIDTH, HEIGHT))
     screen.blit(fon, (0, 0))
@@ -78,7 +76,6 @@ def start_screen():
         clock.tick(FPS)
 
 
-
 start_screen()
 
 # группы спрайтов
@@ -87,30 +84,47 @@ tiles_group = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
 
 
-def generate_level(level):
+def generate_level(level):  # Будет дороботка переходов и создание 2 разных полей(дом, улица)
     new_player, x, y = None, None, None
     for y in range(len(level)):
-        for x in range(len(level[y])):
-            if level[y][x] == '.':
-                Tile('empty', x, y)
-            elif level[y][x] == '#':
-                Tile('wall', x, y)
-            elif level[y][x] == 'c':
-                Tile('mario', x, y)
-            elif level[y][x] == '@':
-                Tile('empty', x, y)
-                new_player = Player(x, y)
-    # вернем игрока, а также размер поля в клетках
-    return new_player, x, y
+        for y in range(len(level)):
+            for x in range(len(level[y])):
+                if level[y][x] == '.':
+                    Tile('grass', x, y)
+                elif level[y][x] == ',':
+                    Tile('floor', x, y)
+                elif level[y][x] == '#':
+                    Tile('wall1', x, y)
+                elif level[y][x] == '%':
+                    Tile('wall2', x, y)
+                elif level[y][x] == '<':
+                    Tile('dorLV', x, y)
+                elif level[y][x] == '/':
+                    Tile('dorLN', x, y)
+                elif level[y][x] == '>':
+                    Tile('dorPV', x, y)
+                elif level[y][x] == '|':
+                    Tile('dorPN', x, y)
+                elif level[y][x] == '@':
+                    Tile('floor', x, y)
+                    new_player = Player(x, y)
+        # вернем игрока, а также размер поля в клетках
+        return new_player, x, y
 
 
 tile_images = {
     'wall': load_image('box.png'),
-    'mario': load_image('mario.png'),
-    'empty': load_image('ParketB.png')
+    'grass': load_image('grass.png'),
+    'floor': load_image('ParketB.png'),
+    'wall1': load_image('stenaVeth.png'),
+    'wall2': load_image('stena.png'),
+    'dorLV': load_image('dorLV.png'),
+    'dorLN': load_image('dorLN.png'),
+    'dorPV': load_image('dorPV.png'),
+    'dorPN': load_image('dorPN.png'),
 }
 tile_width = tile_height = 50
-player_image = pygame.transform.scale(load_image("SerCatStoit.png"), (50, 50))
+player_image = pygame.transform.scale(load_image("blcat.png"), (50, 50))
 
 
 class Tile(pygame.sprite.Sprite):
@@ -126,7 +140,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__(player_group, all_sprites)
         self.image = player_image
         self.rect = self.image.get_rect().move(
-            tile_width * pos_x , tile_height * pos_y)
+            tile_width * pos_x, tile_height * pos_y)
 
 
 def load_level(filename):
@@ -141,9 +155,10 @@ def load_level(filename):
     # дополняем каждую строку пустыми клетками ('.')
     return list(map(lambda x: x.ljust(max_width, '.'), level_map))
 
+
 camera = Camera()
 
-player, level_x, level_y = generate_level(load_level('map.txt'))
+player, level_x, level_y = generate_level(load_level('map.txt'))  # Будет дороботка переходов(дом, улица)
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
