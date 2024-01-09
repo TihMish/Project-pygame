@@ -84,7 +84,7 @@ tiles_group = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
 
 
-def generate_level(level):  # Будет дороботка переходов и создание 2 разных полей(дом, улица)
+def generate_level_out(level):  # Будет дороботка переходов и создание 2 разных полей(дом, улица)
     new_player, x, y = None, None, None
     for y in range(len(level)):
         for y in range(len(level)):
@@ -92,6 +92,32 @@ def generate_level(level):  # Будет дороботка переходов �
                 if level[y][x] == '.':
                     Tile('grass', x, y)
                 elif level[y][x] == ',':
+                    Tile('floor', x, y)
+                elif level[y][x] == '#':
+                    Tile('wall1', x, y)
+                elif level[y][x] == '%':
+                    Tile('wall2', x, y)
+                elif level[y][x] == '<':
+                    Tile('dorLV', x, y)
+                elif level[y][x] == '/':
+                    Tile('dorLN', x, y)
+                elif level[y][x] == '>':
+                    Tile('dorPV', x, y)
+                elif level[y][x] == '|':
+                    Tile('dorPN', x, y)
+                elif level[y][x] == '@':
+                    Tile('floor', x, y)
+                    new_player = Player(x, y)
+        # вернем игрока, а также размер поля в клетках
+        return new_player, x, y
+
+
+def generate_level_in(level):  # Будет дороботка переходов и создание 2 разных полей(дом, улица)
+    new_player, x, y = None, None, None
+    for y in range(len(level)):
+        for y in range(len(level)):
+            for x in range(len(level[y])):
+                if level[y][x] == ',':
                     Tile('floor', x, y)
                 elif level[y][x] == '#':
                     Tile('wall1', x, y)
@@ -158,7 +184,10 @@ def load_level(filename):
 
 camera = Camera()
 
-player, level_x, level_y = generate_level(load_level('map.txt'))  # Будет дороботка переходов(дом, улица)
+if ...:  # прверка наступления события(от этого будет зависеть смена помещения)
+    player, level_x, level_y = generate_level_out(load_level('out.txt'))
+else:
+    player, level_x, level_y = generate_level_in(load_level('in.txt'))
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
