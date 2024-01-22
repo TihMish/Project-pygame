@@ -30,6 +30,7 @@ clock = pygame.time.Clock()
 STEP = 50
 
 
+
 class btn:
     def __init__(self, x, y, color, text=''):
         self.x, self.y = x, y
