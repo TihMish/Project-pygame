@@ -94,6 +94,10 @@ tile_images = {
     'dorPV': load_image('dorPV.png'),
     'dorPN': load_image('dorPN.png'),
     'camen': load_image('camen.png'),
+    'CamenLi': load_image('CamenLi.png'),
+    'CamenLi1': load_image('CamenLi1.png'),
+    'CamenLi2': load_image('CamenLi2.png'),
+    'CamenLi20': load_image('CamenLi20.png'),
     'dorDPN': load_image('dorDPN.png'),
     'dorDLN': load_image('dorDLN.png')
 }
@@ -194,10 +198,6 @@ def generate_level_in(level):  # Будет дороботка переходо�
                 Tile('dorPV', x, y)
             elif level[y][x] == '|':
                 Tile('dorPN', x, y)
-            elif level[y][x] == '>':
-                Tile('dorPV', x, y)
-            elif level[y][x] == '|':
-                Tile('dorDPN', x, y)
             elif level[y][x] == '@':
                 Tile('floor', x, y)
                 new_player = Player(x, y)
