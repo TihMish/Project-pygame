@@ -93,7 +93,9 @@ tile_images = {
     'dorLN': load_image('dorLN.png'),
     'dorPV': load_image('dorPV.png'),
     'dorPN': load_image('dorPN.png'),
-    'camen': load_image('camen.png')
+    'camen': load_image('camen.png'),
+    'dorDPN': load_image('dorDPN.png'),
+    'dorDLN': load_image('dorDLN.png')
 }
 tile_width = tile_height = 50
 player_image = pygame.transform.scale(load_image("blcat.png"), (50, 50))
@@ -192,6 +194,10 @@ def generate_level_in(level):  # Будет дороботка переходо�
                 Tile('dorPV', x, y)
             elif level[y][x] == '|':
                 Tile('dorPN', x, y)
+            elif level[y][x] == '>':
+                Tile('dorPV', x, y)
+            elif level[y][x] == '|':
+                Tile('dorDPN', x, y)
             elif level[y][x] == '@':
                 Tile('floor', x, y)
                 new_player = Player(x, y)
