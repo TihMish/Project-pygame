@@ -173,6 +173,14 @@ def generate_level_out(level):  # Будет дороботка переходо
                 Tile('dorPV', x, y)
             elif level[y][x] == '|':
                 Tile('dorPN', x, y)
+            elif level[y][x] == '+':
+                Tile('CamenLi', x, y)
+            elif level[y][x] == '-':
+                Tile('CamenLi1', x, y)
+            elif level[y][x] == '~':
+                Tile('CamenLi2', x, y)
+            elif level[y][x] == '_':
+                Tile('CamenLi20', x, y)
             elif level[y][x] == '@':
                 Tile('grass', x, y)
                 new_player = Player(x, y)
