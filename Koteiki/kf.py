@@ -98,6 +98,11 @@ tile_images = {
 tile_width = tile_height = 50
 player_image = pygame.transform.scale(load_image("blcat.png"), (50, 50))
 
+# группы спрайтов
+all_sprites = pygame.sprite.Group()
+tiles_group = pygame.sprite.Group()
+player_group = pygame.sprite.Group()
+
 
 def start_screen():
     intro_text = ["""Хождения Котейки
@@ -130,44 +135,9 @@ def start_screen():
 start_screen()
 
 
-def ch_home_out():
-    print("+")
-    disp = pygame.transform.scale(load_image('fon_ch.png'), (1050, 748))
-    screen.blit(disp, (0, 0))
-    home = btn(150, 180, (23, 38, 29), 'Home')
-    out = btn(150, 280, (23, 38, 29), 'Out')
-    home.draw()
-    out.draw()
-    font = pygame.font.Font(None, 30)
-    text = font.render("Выберите место появления", True, (0, 0, 0))
-    screen.blit(text, (100, 50))
-    while True:
-        for i in pygame.event.get():
-            if i.type == pygame.QUIT:
-                terminate()
-            elif i.type == pygame.MOUSEBUTTONDOWN:
-                p = pygame.mouse.get_pos()
-                if home.x < p[0] < home.x + home.width and home.y < p[1] < home.y + home.height:
-                    return 'home'
-                elif out.x < p[0] < out.x + out.width and out.y < p[1] < out.y + out.height:
-                    return 'out'
-
-        pygame.display.flip()
-        clock.tick(FPS)
-
-
-ch_home_out()
-
-# группы спрайтов
-all_sprites = pygame.sprite.Group()
-tiles_group = pygame.sprite.Group()
-player_group = pygame.sprite.Group()
-
-
-def load_level(filename):
-    print("+")
-    filename = "data/" + filename
-    with open(filename, 'r') as mapFile:
+def load_level(file_map):
+    file_map = "data/" + file_map
+    with open(file_map, 'r') as mapFile:
         level_map = [line.strip() for line in mapFile]
 
     max_width = max(map(len, level_map))
@@ -230,7 +200,6 @@ def generate_level_in(level):  # Будет дороботка переходо�
 
 
 def load_home(file_map):
-    print("+")
     player, level_x, level_y = generate_level_in(load_level(file_map))
 
     while True:
@@ -259,7 +228,6 @@ def load_home(file_map):
 
 
 def load_out(file_map):
-    print("+")
     player, level_x, level_y = generate_level_out(load_level(file_map))
 
     while True:
@@ -285,3 +253,31 @@ def load_out(file_map):
         player_group.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
+
+
+def ch_home_out():
+    disp = pygame.transform.scale(load_image('fon_ch.png'), (1050, 748))
+    screen.blit(disp, (0, 0))
+    home = btn(150, 180, (23, 38, 29), 'Home')
+    out = btn(150, 280, (23, 38, 29), 'Out')
+    home.draw()
+    out.draw()
+    font = pygame.font.Font(None, 30)
+    text = font.render("Выберите место появления", True, (0, 0, 0))
+    screen.blit(text, (100, 50))
+    while True:
+        for i in pygame.event.get():
+            if i.type == pygame.QUIT:
+                terminate()
+            elif i.type == pygame.MOUSEBUTTONDOWN:
+                p = pygame.mouse.get_pos()
+                if home.x < p[0] < home.x + home.width and home.y < p[1] < home.y + home.height:
+                    load_home('in.txt')
+                elif out.x < p[0] < out.x + out.width and out.y < p[1] < out.y + out.height:
+                    load_out('out.txt')
+
+        pygame.display.flip()
+        clock.tick(FPS)
+
+
+ch_home_out()
