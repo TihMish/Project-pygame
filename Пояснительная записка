@@ -1,1 +1,20 @@
-1.
+1. Class Camera
+2. class btn
+2.1. def draw
+3. class Tile
+4. class Player
+5. class Predmets
+6. def New
+7. def MoveUp
+8. def MoveDown
+9. def MoveLeft
+10. def MoveRight
+11. def terminate
+12. def load_image
+13. def start_screen
+14. def load_level
+15. def generate_level_out
+16. def generate_level_in
+17. def load_home
+18. load_out
+19. ch_home_ou
