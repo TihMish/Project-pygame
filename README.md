@@ -6,7 +6,7 @@
 
 2. Создание игрового поля и заставки при помощи функций start_screen(transform, blit, render, get_rect, intro_rect) и generate_level(class Tile, class Player) и файла формата txt с самим полем. В них будут реализованы деёстыия с screen(основным окном для отображения игрового интерфейса)
 
-3. Обработа и передача изображений(поле, игроки, предметы) для графического дизайна игры при помощи функции load_images(image.load, try, get_at, set_colorkey)
+3. Обработка и передача изображений(поле, игроки, предметы) для графического дизайна игры при помощи функции load_images(image.load, try, get_at, set_colorkey)
 
 4. Чтение и преобразование в игру при помощи load_level(ljust, mapFile)
 
